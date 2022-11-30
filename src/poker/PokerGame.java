@@ -730,35 +730,6 @@ public class PokerGame {
 		 */
 		
 		PokerGame pg = new PokerGame(1);
-//		pg.playerList.add(new Player("Scott", 0, new StandardCard[] {new StandardCard(4,"Hearts"),new StandardCard(10,"Diamonds")}));
-//		pg.playerList.add(new Player("1Findawg", 0, new StandardCard[] {new StandardCard(10,"Hearts"),new StandardCard(5,"Diamonds")}));
-//		pg.playerList.add(new Player("Jack", 0, new StandardCard[] {new StandardCard(2,"Hearts"),new StandardCard(3,"Diamonds")}));
-//		pg.communityCards = new StandardCard[] {
-//				new StandardCard(11,"Hearts"),
-//				new StandardCard(9,"Hearts"),
-//				new StandardCard(2,"Spades"),
-//				new StandardCard(8,"Hearts"),
-//				new StandardCard(13,"Spades")};
-////		pg.royalFlush();
-//		pg.straightFlush();
-//		pg.fourOfAKind();
-//		pg.fullHouse();
-//		pg.flush();
-//		pg.straight();
-//		pg.threeOfAKind();
-//		pg.twoPair();
-//		pg.onePair();
-//		pg.highCard();
-		
-//		ArrayList<StandardCard> testHand = new ArrayList<StandardCard>();
-//		testHand.add(new StandardCard(2,"Hearts"));
-//		testHand.add(new StandardCard(10,"Diamonds"));
-//		testHand.add(new StandardCard(5,"Hearts"));
-//		testHand.add(new StandardCard(9,"Spades"));
-//		testHand.add(new StandardCard(13,"Hearts"));
-//		testHand.add(new StandardCard(2,"Clubs"));
-//		testHand.add(new StandardCard(4,"Clubs"));
-//		System.out.println(pg.sortLowToHighCards(testHand));
 
 	}
 
