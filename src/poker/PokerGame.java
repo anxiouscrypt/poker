@@ -31,11 +31,9 @@ public class PokerGame {
 		while (this.keepPlaying) {
 			// First round of betting (pre-flop)
 			bettingRound(true);
-			
 			System.out.println("1");
 			// Deal the flop to the community cards
 			dealNextCommunityCard();
-			
 			System.out.println("2");
 			// Second round of betting
 			bettingRound(false);
@@ -135,7 +133,12 @@ public class PokerGame {
 			startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind) + 2;
 		}
 		else {
-			startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind);
+			if (playerList.size() <= 2) {
+				startingPlayerIndex = 0;
+			}
+			else {
+				startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind);
+			}
 		}
 		int currentPlayerIndex = startingPlayerIndex;
 		for (int i = 0; i < this.playerList.size(); i++) {
@@ -727,16 +730,16 @@ public class PokerGame {
 		 */
 		
 		PokerGame pg = new PokerGame(1);
-		pg.playerList.add(new Player("Scott", 0, new StandardCard[] {new StandardCard(4,"Hearts"),new StandardCard(10,"Diamonds")}));
-		pg.playerList.add(new Player("1Findawg", 0, new StandardCard[] {new StandardCard(10,"Hearts"),new StandardCard(5,"Diamonds")}));
-		pg.playerList.add(new Player("Jack", 0, new StandardCard[] {new StandardCard(2,"Hearts"),new StandardCard(3,"Diamonds")}));
-		pg.communityCards = new StandardCard[] {
-				new StandardCard(11,"Hearts"),
-				new StandardCard(9,"Hearts"),
-				new StandardCard(2,"Spades"),
-				new StandardCard(8,"Hearts"),
-				new StandardCard(13,"Spades")};
-//		pg.royalFlush();
+//		pg.playerList.add(new Player("Scott", 0, new StandardCard[] {new StandardCard(4,"Hearts"),new StandardCard(10,"Diamonds")}));
+//		pg.playerList.add(new Player("1Findawg", 0, new StandardCard[] {new StandardCard(10,"Hearts"),new StandardCard(5,"Diamonds")}));
+//		pg.playerList.add(new Player("Jack", 0, new StandardCard[] {new StandardCard(2,"Hearts"),new StandardCard(3,"Diamonds")}));
+//		pg.communityCards = new StandardCard[] {
+//				new StandardCard(11,"Hearts"),
+//				new StandardCard(9,"Hearts"),
+//				new StandardCard(2,"Spades"),
+//				new StandardCard(8,"Hearts"),
+//				new StandardCard(13,"Spades")};
+////		pg.royalFlush();
 //		pg.straightFlush();
 //		pg.fourOfAKind();
 //		pg.fullHouse();
