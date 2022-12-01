@@ -10,11 +10,6 @@ public class PokerGame {
 	private StandardDeck gameDeck;
 	private StandardCard[] communityCards;
 	private int winningPot;
-	private int smallBlind;
-	private int bigBlind;
-	private Player dealer;
-	private Player playerSmallBlind;
-	private Player playerBigBlind;
 	private int[] playersTotalBets;
 	private boolean keepPlaying;
 	Scanner scan = new Scanner(System.in);
@@ -24,19 +19,17 @@ public class PokerGame {
 		this.gameDeck = new StandardDeck();
 		this.communityCards = new StandardCard[5];
 		this.winningPot = 0;
-		this.smallBlind = smallBlind;
-		this.bigBlind = this.smallBlind * 2;
 		this.keepPlaying = true;
 		playerSetup();
 		while (this.keepPlaying) {
 			// First round of betting (pre-flop)
-			bettingRound(true);
+			bettingRound();
 			System.out.println("1");
 			// Deal the flop to the community cards
 			dealNextCommunityCard();
 			System.out.println("2");
 			// Second round of betting
-			bettingRound(false);
+			bettingRound();
 			
 			System.out.println("3");
 			// Deal the turn (1 more community card)
@@ -44,11 +37,12 @@ public class PokerGame {
 			
 			System.out.println("4");
 			// Third round of betting
-			bettingRound(false);
+			bettingRound();
 			
 			System.out.println("5");
 			// Deal the river (last community card)
 			dealNextCommunityCard();
+			bettingRound();
 			
 			System.out.println("6");
 			// Determine winner
@@ -56,7 +50,6 @@ public class PokerGame {
 			
 			System.out.println("7");
 			// Rotate dealer, small blind and big blind positions
-			rotatePlayerPositions();
 			
 			System.out.println("Do you want to play another round? (Y/N)");
 			if (scan.next().toLowerCase().contains("n")) {
@@ -66,57 +59,13 @@ public class PokerGame {
 	}
 	
 	public void playerSetup() {
-		boolean addAnotherPlayer = true;
-		while (addAnotherPlayer) {
-			addAnotherPlayer = false;
 			addPlayer();
-			System.out.println("Do you want to add another player? (Y/N)");
-			if (scan.next().toLowerCase().contains("y")) {
-				addAnotherPlayer = true;
-			}
-		}
-		this.dealer = playerList.get(0);
+			
 		if (playerList.size() > 2) {
-			this.playerSmallBlind = playerList.get(1);
-			this.playerBigBlind = playerList.get(2);
 		}
 		this.playersTotalBets = new int[playerList.size()];
-		payOutBlinds();
 	}
-	
-	public void rotatePlayerPositions() {
-		int dealerIndex = this.playerList.indexOf(this.dealer);
-		int smallBlindIndex = this.playerList.indexOf(this.playerSmallBlind);
-		int bigBlindIndex = this.playerList.indexOf(this.playerBigBlind);
-		if (dealerIndex < this.playerList.size()-1) {
-			this.dealer = this.playerList.get(dealerIndex+1);
-		}
-		else {
-			this.dealer = this.playerList.get(0);
-		}
-		if (smallBlindIndex < this.playerList.size()-1) {
-			this.playerSmallBlind = this.playerList.get(smallBlindIndex+1);
-		}
-		else {
-			this.playerSmallBlind = this.playerList.get(0);
-		}
-		if (bigBlindIndex < this.playerList.size()-1) {
-			this.playerBigBlind = this.playerList.get(bigBlindIndex+1);
-		}
-		else {
-			this.playerBigBlind = this.playerList.get(0);
-		}
-	}
-	
-	public void payOutBlinds() {
-		if (this.playerList.size() > 2) {
-			this.playerSmallBlind.reduceFromBalance(this.smallBlind);
-			this.playersTotalBets[this.playerList.indexOf(playerSmallBlind)] = this.smallBlind;
-			this.playerBigBlind.reduceFromBalance(this.bigBlind);
-			this.playersTotalBets[this.playerList.indexOf(this.playerBigBlind)] = this.bigBlind;
-		}
-	}
-	
+
 	public void addPlayer() {
 		System.out.println("Enter player name:");
 		String tempName = scan.next();
@@ -127,36 +76,16 @@ public class PokerGame {
 		System.out.println(playerList.get(playerList.size()-1).toString());
 	}
 	
-	public void bettingRound(boolean isPreFlop) {
-		int startingPlayerIndex; 
-		if (isPreFlop) {
-			if (this.playerList.size() > 2) {
-				startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind) + 2;
-			}
-			else {
-				startingPlayerIndex = 0;
-			}
-		}
-		else {
-			if (playerList.size() <= 2) {
-				startingPlayerIndex = 0;
-			}
-			else {
-				startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind);
-			}
-		}
-		int currentPlayerIndex = startingPlayerIndex;
-		for (int i = 0; i < this.playerList.size(); i++) {
-			if (this.playerList.get(currentPlayerIndex).getIsInGame()) {
-				currentPlayerIndex = individualBet(currentPlayerIndex);
-			}
+	public void bettingRound() {
+		if (this.playerList.get(0).getIsInGame()) {
+			individualBet(0);
 		}
 		while (!areAllBetsEqual()) {
-			currentPlayerIndex = individualBet(currentPlayerIndex);
+			individualBet(0);
 		}
 	}
 	
-	public int individualBet(int currentPlayerIndex) {
+	public void individualBet(int currentPlayerIndex) {
 		String checkOrCall = areAllBetsEqual() ? "check" : "call";
 		printCommunityCards();
 		System.out.println("The pot is: " + this.winningPot);
@@ -172,12 +101,7 @@ public class PokerGame {
 		else if (answer.toLowerCase().contains("raise")) {
 			raise(this.playerList.get(currentPlayerIndex));
 		}
-		// Check will do nothing in the program just moves the index to the next player
-		currentPlayerIndex++;
-		if (currentPlayerIndex == this.playerList.size()) {
-			currentPlayerIndex = 0;
-		}
-		return currentPlayerIndex;
+		// Check will do nothing in the program just moves the index to the next player.
 	}
 	
 	public boolean areAllBetsEqual() {
@@ -258,6 +182,9 @@ public class PokerGame {
 	}
 	
 	public void findWinner() {
+		/*
+		 *  Switch if statments to switch case
+		 */
 		ArrayList<Player> winningPlayers = new ArrayList<Player>();
 		//royalFlush
 		winningPlayers = royalFlush();
