@@ -130,7 +130,12 @@ public class PokerGame {
 	public void bettingRound(boolean isPreFlop) {
 		int startingPlayerIndex; 
 		if (isPreFlop) {
-			startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind) + 2;
+			if (this.playerList.size() > 2) {
+				startingPlayerIndex = this.playerList.indexOf(this.playerSmallBlind) + 2;
+			}
+			else {
+				startingPlayerIndex = 0;
+			}
 		}
 		else {
 			if (playerList.size() <= 2) {
