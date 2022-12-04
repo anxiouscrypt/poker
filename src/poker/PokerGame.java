@@ -58,6 +58,7 @@ public class PokerGame {
 		gameDeck.reset();
 		gameDeck.shuffleDeck();
 		this.communityCards = new StandardCard[5];
+		this.playersTotalBets = new int[playerList.size()];
 		Player tempPlayer;
 		for (int p = 0; p < this.playerList.size(); p++) {
 			tempPlayer = this.playerList.get(p);
