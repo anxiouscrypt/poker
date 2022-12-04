@@ -13,9 +13,9 @@ public class PokerGame {
 	private int[] playersTotalBets;
 	private boolean keepPlaying;
 	private Player dealer;
-	private int dealerWins;
-	private int playerWins;
-	
+	private float dealerWins;
+	private float playerWins;
+
 	Scanner scan = new Scanner(System.in);
 	
 	public PokerGame(int smallBlind) {
@@ -51,13 +51,17 @@ public class PokerGame {
 			findWinner();
 			
 			System.out.println("Do you want to play another round? (Y/N)");
-			if (scan.next().toLowerCase().contains("n")) {
-				System.out.println("Dealer Wins: " + dealerWins);
-				System.out.println("Player Wins: " + playerWins);
+			String newGame = scan.next();
+			if (newGame.toLowerCase().contains("n")) {
 				this.keepPlaying = false;
 			}
 			newRound();
+			
 		}
+		System.out.println("Dealer Wins: " + dealerWins + " " + (dealerWins / (dealerWins + playerWins) * 100) + "%");
+		System.out.println("Player Wins: " + playerWins + " " + (playerWins / (dealerWins + playerWins) * 100) + "%");
+		System.out.println("Games Played: " + (dealerWins + playerWins));
+		
 	}
 	
 	private void printDealerHoleCards() {
@@ -71,8 +75,8 @@ public class PokerGame {
 		gameDeck.reset();
 		gameDeck.shuffleDeck();
 		this.communityCards = new StandardCard[5];
-		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 		StandardCard[] dealerHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
+		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 		for (int p = 0; p < this.playerList.size(); p++) {
 			tempPlayer = this.playerList.get(p);
 			tempPlayer.setHoleCards(tempHoleCards);
@@ -83,8 +87,8 @@ public class PokerGame {
 	}
 
 	public void playerSetup() {
-		addPlayer();
 		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
+		addPlayer();
 		this.playersTotalBets = new int[playerList.size()];
 		this.dealer.setHoleCards(tempHoleCards);
 	}
@@ -96,7 +100,6 @@ public class PokerGame {
 		int tempBalance = scan.nextInt();
 		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 		playerList.add(new Player(tempName, tempBalance, tempHoleCards));
-		System.out.println(playerList.get(playerList.size()-1).toString());
 	}
 	
 	public void bettingRound() {
