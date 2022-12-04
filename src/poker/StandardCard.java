@@ -4,10 +4,12 @@ public class StandardCard {
 	private int value;
 	private String suit;
 	private String color;
+	private String src;
 	
 	public StandardCard(int value, String suit) {
 		this.value = value;
 		this.suit = suit;
+		this.src = setSrc();
 		if (this.suit.equals("Hearts") || this.suit.equals("Diamonds")) {
 			this.color = "Red";
 		}
@@ -16,6 +18,15 @@ public class StandardCard {
 		}
 	}
 	
+	private String setSrc() {
+		String src = this.value + this.suit + ".png";
+		return src;
+	}
+	
+	public String getSrc() {
+		return src;
+	}
+
 	public int getValue() {
 		return this.value;
 	}
@@ -49,7 +60,7 @@ public class StandardCard {
 	}
 	
 	public String toString() {
-		return (convertValueToName() + " of " + this.suit);
+		return (convertValueToName() + " of " + this.suit + " Source: " + this.src);
 	}
 
 	public static void main(String[] args) {

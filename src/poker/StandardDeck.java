@@ -32,7 +32,7 @@ public class StandardDeck {
 			deck.add(new StandardCard(l,"Clubs"));
 		}
 	}
-	
+
 	public void shuffleDeck() {
 		ArrayList<StandardCard> tempDeck = new ArrayList<StandardCard>();
 		while (this.deck.size() > 0) {
