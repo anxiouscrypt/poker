@@ -25,18 +25,22 @@ public class PokerGame {
 			for (int p = 0; p < this.playerList.size(); p++) {
 				this.playerList.get(p).setIsInGame(true);
 			}
+
 			// First round of betting (pre-flop)
 			bettingRound();
 			// Deal the flop to the community cards
 			dealNextCommunityCard();
+			printCommunityCards();
 			// Second round of betting
 			bettingRound();
 			// Deal the turn (1 more community card)
 			dealNextCommunityCard();
+			printCommunityCards();
 			// Third round of betting
 			bettingRound();
 			// Deal the river (last community card)
 			dealNextCommunityCard();
+			printCommunityCards();
 			// Third round of betting
 			bettingRound();
 			// Determine winner
@@ -46,9 +50,22 @@ public class PokerGame {
 			if (scan.next().toLowerCase().contains("n")) {
 				this.keepPlaying = false;
 			}
+			newRound();
 		}
 	}
 	
+	public void newRound() {
+		gameDeck.reset();
+		gameDeck.shuffleDeck();
+		this.communityCards = new StandardCard[5];
+		Player tempPlayer;
+		for (int p = 0; p < this.playerList.size(); p++) {
+			tempPlayer = this.playerList.get(p);
+			StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
+			tempPlayer.setHoleCards(tempHoleCards);
+		}
+	}
+
 	public void playerSetup() {
 		addPlayer();
 		this.playersTotalBets = new int[playerList.size()];
@@ -75,7 +92,6 @@ public class PokerGame {
 	
 	public void individualBet(int currentPlayerIndex) {
 		String checkOrCall = areAllBetsEqual() ? "check" : "call";
-		printCommunityCards();
 		System.out.println("The pot is: " + this.winningPot);
 		System.out.println(this.playerList.get(currentPlayerIndex).toString() + 
 				"\nDo you want to fold, " + checkOrCall + " or raise?");
@@ -130,6 +146,7 @@ public class PokerGame {
 		call(player);
 		player.reduceFromBalance(raiseAmount);
 		this.playersTotalBets[this.playerList.indexOf(player)] += raiseAmount;
+//		System.out.println(this.playersTotalBets[this.playerList.indexOf(player)]);
 		updateWinningPot();
 	}
 	
