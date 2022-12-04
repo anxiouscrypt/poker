@@ -29,20 +29,18 @@ public class PokerGame {
 			// First round of betting (pre-flop)
 			bettingRound();
 			// Deal the flop to the community cards
-			dealNextCommunityCard();
+			dealFlop();
 			printCommunityCards();
 			// Second round of betting
 			bettingRound();
 			// Deal the turn (1 more community card)
-			dealNextCommunityCard();
+			dealTurn();
 			printCommunityCards();
 			// Third round of betting
 			bettingRound();
 			// Deal the river (last community card)
-			dealNextCommunityCard();
+			dealRiver();
 			printCommunityCards();
-			// Third round of betting
-			bettingRound();
 			// Determine winner
 			findWinner();
 			
@@ -158,19 +156,21 @@ public class PokerGame {
 		}
 	}
 	
-	public void dealNextCommunityCard() {
-		if (this.communityCards[0] == null) { // Flop
-			this.communityCards[0] = this.gameDeck.getNextCard();
-			this.communityCards[1] = this.gameDeck.getNextCard();
-			this.communityCards[2] = this.gameDeck.getNextCard();
-		}
-		else if (this.communityCards[3] == null) { // Turn
-			this.communityCards[3] = this.gameDeck.getNextCard();
-		}
-		else if (this.communityCards[4] == null) {
-			this.communityCards[4] = this.gameDeck.getNextCard();
-		}
+	public void dealFlop() {
+		this.communityCards[0] = this.gameDeck.getNextCard();
+		this.communityCards[1] = this.gameDeck.getNextCard();
+		this.communityCards[2] = this.gameDeck.getNextCard();
 	}
+	
+	public void dealTurn() {
+		this.communityCards[3] = this.gameDeck.getNextCard();
+	}
+	
+	public void dealRiver() {
+		this.communityCards[4] = this.gameDeck.getNextCard();
+	}
+	
+	
 	
 	public void printCommunityCards() {
 		System.out.println("-----------------------------------------------------");
@@ -689,6 +689,7 @@ public class PokerGame {
 		 * 
 		 */
 		
+		@SuppressWarnings("unused")
 		PokerGame pg = new PokerGame(1);
 
 	}
