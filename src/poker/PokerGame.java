@@ -27,32 +27,20 @@ public class PokerGame {
 			}
 			// First round of betting (pre-flop)
 			bettingRound();
-			System.out.println("1");
 			// Deal the flop to the community cards
 			dealNextCommunityCard();
-			System.out.println("2");
 			// Second round of betting
 			bettingRound();
-			
-			System.out.println("3");
 			// Deal the turn (1 more community card)
 			dealNextCommunityCard();
-			
-			System.out.println("4");
 			// Third round of betting
 			bettingRound();
-			
-			System.out.println("5");
 			// Deal the river (last community card)
 			dealNextCommunityCard();
+			// Third round of betting
 			bettingRound();
-			
-			System.out.println("6");
 			// Determine winner
 			findWinner();
-			
-			System.out.println("7");
-			// Rotate dealer, small blind and big blind positions
 			
 			System.out.println("Do you want to play another round? (Y/N)");
 			if (scan.next().toLowerCase().contains("n")) {
@@ -62,10 +50,7 @@ public class PokerGame {
 	}
 	
 	public void playerSetup() {
-			addPlayer();
-			
-		if (playerList.size() > 2) {
-		}
+		addPlayer();
 		this.playersTotalBets = new int[playerList.size()];
 	}
 
