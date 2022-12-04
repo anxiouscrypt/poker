@@ -8,6 +8,10 @@ public class Player {
 	private StandardCard[] holeCards = new StandardCard[2];
 	private boolean isInGame;
 	
+	public Player() {
+		this.isInGame = true;
+	}
+	
 	public Player(String name, int balance, StandardCard[] holeCards) {
 		this.name = name;
 		this.balance = balance;

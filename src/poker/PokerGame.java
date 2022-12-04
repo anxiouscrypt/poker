@@ -12,6 +12,10 @@ public class PokerGame {
 	private int winningPot;
 	private int[] playersTotalBets;
 	private boolean keepPlaying;
+	private Player dealer;
+	private int dealerWins;
+	private int playerWins;
+	
 	Scanner scan = new Scanner(System.in);
 	
 	public PokerGame(int smallBlind) {
@@ -20,6 +24,7 @@ public class PokerGame {
 		this.communityCards = new StandardCard[5];
 		this.winningPot = 0;
 		this.keepPlaying = true;
+		this.dealer = new Player();
 		playerSetup();
 		while (this.keepPlaying) {
 			for (int p = 0; p < this.playerList.size(); p++) {
@@ -42,32 +47,46 @@ public class PokerGame {
 			dealRiver();
 			printCommunityCards();
 			// Determine winner
+			printDealerHoleCards();
 			findWinner();
 			
 			System.out.println("Do you want to play another round? (Y/N)");
 			if (scan.next().toLowerCase().contains("n")) {
+				System.out.println("Dealer Wins: " + dealerWins);
+				System.out.println("Player Wins: " + playerWins);
 				this.keepPlaying = false;
 			}
 			newRound();
 		}
 	}
 	
+	private void printDealerHoleCards() {
+		System.out.println(Arrays.toString(this.dealer.getHoleCards()));
+		
+	}
+
 	public void newRound() {
+		Player tempPlayer;
+		
 		gameDeck.reset();
 		gameDeck.shuffleDeck();
 		this.communityCards = new StandardCard[5];
-		this.playersTotalBets = new int[playerList.size()];
-		Player tempPlayer;
+		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
+		StandardCard[] dealerHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 		for (int p = 0; p < this.playerList.size(); p++) {
 			tempPlayer = this.playerList.get(p);
-			StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 			tempPlayer.setHoleCards(tempHoleCards);
 		}
+		this.playerList.remove(this.dealer);
+		this.dealer.setHoleCards(dealerHoleCards);
+		this.playersTotalBets = new int[playerList.size()];
 	}
 
 	public void playerSetup() {
 		addPlayer();
+		StandardCard[] tempHoleCards = {gameDeck.getNextCard(), gameDeck.getNextCard()};
 		this.playersTotalBets = new int[playerList.size()];
+		this.dealer.setHoleCards(tempHoleCards);
 	}
 
 	public void addPlayer() {
@@ -145,7 +164,6 @@ public class PokerGame {
 		call(player);
 		player.reduceFromBalance(raiseAmount);
 		this.playersTotalBets[this.playerList.indexOf(player)] += raiseAmount;
-//		System.out.println(this.playersTotalBets[this.playerList.indexOf(player)]);
 		updateWinningPot();
 	}
 	
@@ -193,6 +211,7 @@ public class PokerGame {
 		 */
 		ArrayList<Player> winningPlayers = new ArrayList<Player>();
 		
+		this.playerList.add(this.dealer);
 		
 		//royalFlush
 		winningPlayers = royalFlush();
@@ -278,9 +297,16 @@ public class PokerGame {
 	}
 	
 	public void handleWinners(ArrayList<Player> winningPlayers) {
-		int tempWinnerAward = this.winningPot / winningPlayers.size();
+		int tempWinnerAward = this.winningPot * 2;
 		for (int i = 0; i < winningPlayers.size(); i++) {
+			String name = winningPlayers.get(i).getName();
 			winningPlayers.get(i).addToBalance(tempWinnerAward);
+			if (name == null) {
+				dealerWins += 1;
+			}
+			else {
+				playerWins += 1;
+			}
 		}
 		this.winningPot = 0;
 	}
