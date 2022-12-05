@@ -1,5 +1,8 @@
 package poker;
 
-public class pokerGui {
 
+public class pokerGui {
+	public static void main(String[] a) {
+
+	}
 }

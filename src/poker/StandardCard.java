@@ -60,7 +60,7 @@ public class StandardCard {
 	}
 	
 	public String toString() {
-		return (convertValueToName() + " of " + this.suit + " Source: " + this.src);
+		return (convertValueToName() + " of " + this.suit);
 	}
 
 	public static void main(String[] args) {
