@@ -1,4 +1,4 @@
-package com.poker.game.utils;
+package com.poker.game.classes;
 
 import java.util.Arrays;
 

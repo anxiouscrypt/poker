@@ -1,8 +1,8 @@
 package com.poker.game;
 
-import com.poker.game.utils.Player;
-import com.poker.game.utils.StandardCard;
-import com.poker.game.utils.StandardDeck;
+import com.poker.game.classes.Player;
+import com.poker.game.classes.StandardCard;
+import com.poker.game.classes.StandardDeck;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.poker.game.utils;
+package com.poker.game.classes;
 
 public class StandardCard {
     private int value;
