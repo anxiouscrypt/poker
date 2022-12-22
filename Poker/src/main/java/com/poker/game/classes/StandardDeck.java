@@ -3,7 +3,7 @@ package com.poker.game.classes;
 import java.util.ArrayList;
 
 public class StandardDeck {
-    private ArrayList<StandardCard> deck = new ArrayList<StandardCard>();
+    private ArrayList<StandardCard> deck = new ArrayList<>();
 
     public StandardDeck() {
         reset();
@@ -34,7 +34,7 @@ public class StandardDeck {
     }
 
     public void shuffleDeck() {
-        ArrayList<StandardCard> tempDeck = new ArrayList<StandardCard>();
+        ArrayList<StandardCard> tempDeck = new ArrayList<>();
         while (this.deck.size() > 0) {
             int randomIndex = ((int) (Math.random() * 100)) % this.deck.size();
             tempDeck.add(this.deck.remove(randomIndex));

@@ -1,5 +1,7 @@
 package com.poker.game.classes;
 
+import java.util.ArrayList;
+
 public class StandardCard {
     private int value;
     private String suit;
@@ -74,6 +76,24 @@ public class StandardCard {
         StandardCard card = new StandardCard(1,"Hearts");
         System.out.println(card.toString());
 
+    }
+
+    public static ArrayList<Integer> getValuesOfSuit(ArrayList<StandardCard> playersCardsAll, String suit) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for (int i = 0; i < playersCardsAll.size(); i++) {
+            if (playersCardsAll.get(i).getSuit().contains(suit)) {
+                result.add(playersCardsAll.get(i).getValue());
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<Integer> getValuesOfAllCards(ArrayList<StandardCard> playersCardsAll) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for (int i = 0; i < playersCardsAll.size(); i++) {
+            result.add(playersCardsAll.get(i).getValue());
+        }
+        return result;
     }
 
 }
