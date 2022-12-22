@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 
 
-public class PokerGame implements Betting, newRound {
+public class PokerGame implements Betting, newRound, deal, PlayerSetup {
     public static ArrayList<Player> playerList;
     public static StandardDeck gameDeck;
     public static StandardCard[] communityCards;
@@ -31,7 +31,7 @@ public class PokerGame implements Betting, newRound {
         winningPot = 0;
         boolean keepPlaying = true;
         dealer = new Player();
-        PlayerSetup.playerSetup();
+        playerSetup();
         while (keepPlaying) {
             for (Player player : playerList) {
                 player.setIsInGame(true);
@@ -40,17 +40,17 @@ public class PokerGame implements Betting, newRound {
             // First round of betting (pre-flop)
             bettingRound();
             // Deal the flop to the community cards
-            deal.dealFlop();
+            dealFlop();
             printCommunityCards();
             // Second round of betting
             bettingRound();
             // Deal the turn (1 more community card)
-            deal.dealTurn();
+            dealTurn();
             printCommunityCards();
             // Third round of betting
             bettingRound();
             // Deal the river (last community card)
-            deal.dealRiver();
+            dealRiver();
             printCommunityCards();
             // Determine winner
             printDealerHoleCards();

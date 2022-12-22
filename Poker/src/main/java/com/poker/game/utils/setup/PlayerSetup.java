@@ -6,19 +6,19 @@ import com.poker.game.classes.StandardCard;
 
 import java.util.Scanner;
 
-public class PlayerSetup {
+public interface PlayerSetup {
 
-    private static final int numberOfPlayers = 1;
+    int numberOfPlayers = 1;
 
-    static Scanner scan = new Scanner(System.in);
-    public static void playerSetup() {
+    Scanner scan = new Scanner(System.in);
+    default void playerSetup() {
         StandardCard[] tempHoleCards = {PokerGame.gameDeck.getNextCard(), PokerGame.gameDeck.getNextCard()};
         addPlayer();
         PokerGame.playersTotalBets = new int[PokerGame.playerList.size()];
         PokerGame.dealer.setHoleCards(tempHoleCards);
     }
 
-    public static void addPlayer() {
+    default void addPlayer() {
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.println("Enter player name:");
             String tempName = scan.next();
